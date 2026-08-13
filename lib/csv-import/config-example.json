@@ -1,0 +1,36 @@
+{
+  "sizeSystem": {
+    "nombre_sistema": "systemName",
+    "es_default": "isDefault"
+  },
+  "supplier": {
+    "proveedor": "name"
+  },
+  "gender": {
+    "genero": "name"
+  },
+  "int_category": {
+    "id_referencia": "referenceId",
+    "nombre_categoria": "name"
+  },
+  "category": {
+    "nombre": "name",
+    "proveedor": "supplierName",
+    "genero": "genderName",
+    "sistema_origen": "originSystemName",
+    "sistema_predefinido": "predefinedSystemName",
+    "id_categoria_interna": "intCategoryReferenceId"
+  },
+  "size": {
+    "talla_original": "originalSize",
+    "orden_visualizacion": "displayOrder",
+    "proveedor": "supplierName",
+    "categoria": "categoryName",
+    "sistema_tallas": "sizeSystemName"
+  },
+  "sizeValue": {
+    "valor": "value",
+    "talla_original": "originalSize",
+    "sistema_tallas": "sizeSystemName"
+  }
+}
