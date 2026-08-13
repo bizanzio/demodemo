@@ -1,6 +1,3 @@
-// Schema optimizado para encuestas post-compra
-// Solo las tablas esenciales para funcionalidad básica + idempotencia
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,73 +7,150 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Enum para rangos de tiempo de espera
-enum WaitTimeRange {
-  less2  @map("less2")
-  to5    @map("2to5")
-  to10   @map("5to10")
-  more10 @map("more10")
-
-  @@map("wait_time_range")
+model SizeSystem {
+  id           Int        @id @default(autoincrement())
+  systemName   String     @db.VarChar(50) @unique
+  isDefault    Boolean    @default(false)
+  displayOrder Int        @default(0)
+  sizes        Size[]
+  categories   Category[] @relation("CategoryToSizingSystems")
+  originCategories Category[] @relation("CategoryToOriginSystem")
+  predefinedCategories Category[] @relation("CategoryToPredefinedSystem")
+  sizeValues   SizeValue[]
+  translations SizeSystemTranslation[]
 }
 
-// Tabla principal: respuestas de encuestas
-model Survey {
-  id       String @id @default(cuid())
-  ticketId String @unique @map("ticket_id") @db.VarChar(100)
-  
-  // Respuestas de la encuesta - nomenclatura consistente en camelCase
-  csatScore          Int           @map("csat_score") @db.TinyInt // 1-5
-  npsScore           Int           @map("nps_score") @db.TinyInt // 0-10  
-  salespersonRating  Int           @map("salesperson_rating") @db.TinyInt // 1-5
-  foundEverything    Boolean       @map("found_everything")
-  waitTimeRange      WaitTimeRange @map("wait_time_range")
-  comment            String?       @db.Text
-  
-  // Metadatos
-  locale      String?  @db.VarChar(5)
-  submittedAt DateTime @default(now()) @map("submitted_at")
-  
-  // Campos antifraude (opcionales)
-  ipHash     String? @map("ip_hash") @db.VarChar(64) // SHA-256 de IP
-  userAgent  String? @map("user_agent") @db.VarChar(500)
-  
-  // Relación inversa
-  submission SurveySubmission?
-  
-  @@map("surveys")
-  @@index([ticketId])
-  @@index([submittedAt])
-  @@index([locale, submittedAt])
-  @@index([ipHash]) // Para detectar múltiples encuestas de la misma IP
+model SizeSystemTranslation {
+  id           Int        @id @default(autoincrement())
+  sizeSystemId Int
+  locale       String     @db.VarChar(5)  // es, ca, en, it, fr, de
+  name         String     @db.VarChar(100)
+  sizeSystem   SizeSystem @relation(fields: [sizeSystemId], references: [id], onDelete: Cascade)
+
+  @@unique([sizeSystemId, locale])
+  @@index([sizeSystemId])
 }
 
-// Tabla para idempotencia: evitar envíos duplicados
-model SurveySubmission {
-  id        String   @id @default(cuid())
-  ticketId  String   @unique @map("ticket_id") @db.VarChar(100)
-  surveyId  String?  @unique @map("survey_id") // Referencia a la encuesta creada
-  status    String   @default("completed") @db.VarChar(20) // 'completed'|'failed'
-  createdAt DateTime @default(now()) @map("created_at")
-  
-  // Información del premio (Vales de descuento)
-  rewardStatus    String?   @map("reward_status") @db.VarChar(30) // 'PROCESSED'|'NOT_ELIGIBLE'|'ERROR'|etc
-  voucherId       String?   @map("voucher_id") @db.VarChar(100)
-  voucherAmount   Decimal?  @map("voucher_amount") @db.Decimal(10, 2)
-  rewardProcessedAt DateTime? @map("reward_processed_at") // Cuándo se procesó
-  
-  // Retrocompatibilidad o campos adicionales
-  pointsStatus    String? @map("points_status") @db.VarChar(30) // Mantener por si acaso o migrar
-  pointsEarned    Decimal? @map("points_earned") @db.Decimal(10, 2)
-  pointsTotal     Decimal? @map("points_total") @db.Decimal(10, 2)
-  pointsProcessedAt DateTime? @map("points_processed_at")
-  
-  // Relación con Survey
-  survey Survey? @relation(fields: [surveyId], references: [id], onDelete: SetNull)
-  
-  @@map("survey_submissions")
-  @@index([ticketId])
-  @@index([status])
-  @@index([surveyId])
-  @@index([pointsStatus]) // Para análisis de puntos
+model Supplier {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(100) @unique
+  categories     Category[]
+  sizes          Size[]
+}
+
+model Gender {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(50) @unique
+  categories Category[]
+}
+
+model Category {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(100)
+  genderId       Int?
+  supplierId     Int?
+  originSystemId Int?
+  predefinedSystemId Int?
+  gender         Gender?     @relation(fields: [genderId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "category_ibfk_1")
+  supplier       Supplier?   @relation(fields: [supplierId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "category_ibfk_2")
+  sizingSystems  SizeSystem[] @relation("CategoryToSizingSystems")
+  sizes          Size[]
+  originSystem   SizeSystem? @relation("CategoryToOriginSystem", fields: [originSystemId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  predefinedSystem   SizeSystem? @relation("CategoryToPredefinedSystem", fields: [predefinedSystemId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  intCategories  Int_Category[] @relation("IntCategoryToCategory")
+  images         CategoryImage[]
+  sizeExceptions ProductSizeException[] @relation("RedirectCategory")
+
+  @@unique([supplierId, genderId, name])
+  @@index([genderId], map: "genderId")
+  @@index([supplierId], map: "supplierId")
+  @@index([originSystemId], map: "originSystemId")
+}
+
+model CategoryImage {
+  id          Int      @id @default(autoincrement())
+  categoryId  Int
+  filename    String   @db.VarChar(255)
+  originalName String  @db.VarChar(255)
+  mimeType    String   @db.VarChar(100)
+  size        Int
+  url         String   @db.VarChar(500)
+  order       Int      @default(0)
+  alt         String?  @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId], map: "categoryId")
+}
+
+
+model Int_Category {
+  id Int @id @default(autoincrement())
+  referenceId String @db.VarChar(50) @unique
+  name String @db.VarChar(100)
+  categories Category[] @relation("IntCategoryToCategory")
+}
+
+model ProductSizeException {
+  id                    Int          @id @default(autoincrement())
+  modelCodes            String       @db.Text
+  redirectCategoryId    Int
+  notes                 String?      @db.Text
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  redirectCategory      Category     @relation("RedirectCategory", fields: [redirectCategoryId], references: [id], onDelete: Cascade)
+
+  @@index([redirectCategoryId])
+}
+
+model Size {
+  id              Int         @id @default(autoincrement())
+  originalSize    String      @db.VarChar(10)
+  displayOrder    Int?
+  supplierId      Int?
+  categoryId      Int?
+  sizeSystemId    Int?
+  supplier        Supplier?   @relation(fields: [supplierId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "size_ibfk_1")
+  category        Category?   @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "size_ibfk_2")
+  sizeSystem      SizeSystem? @relation(fields: [sizeSystemId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "size_ibfk_3")
+  sizeValues      SizeValue[]
+
+  @@index([categoryId], map: "categoryId")
+  @@index([sizeSystemId], map: "sizeSystemId")
+  @@index([supplierId], map: "supplierId")
+}
+
+model SizeValue {
+  id           Int        @id @default(autoincrement())
+  value        String     @db.VarChar(20)
+  sizeId       Int
+  sizeSystemId Int
+  size         Size       @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  sizeSystem   SizeSystem @relation(fields: [sizeSystemId], references: [id], onDelete: Cascade)
+
+  @@unique([sizeId, sizeSystemId])
+  @@index([sizeId], map: "sizeId")
+  @@index([sizeSystemId], map: "sizeSystemId")
+}
+
+model SizeGuideChart {
+  id          Int      @id @default(autoincrement())
+  referenceId String   @db.VarChar(50)
+  supplierId  Int      @default(0)
+  genderId    Int      @default(0)
+  locale      String   @default("") @db.VarChar(5)
+  url         String   @db.VarChar(500)
+  minioKey    String   @db.VarChar(500)
+  dataHash    String   @db.VarChar(64)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([referenceId, supplierId, genderId, locale])
+  @@index([referenceId])
+}
+
+model users {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(100)
+  email String @unique(map: "email") @db.VarChar(100)
 }

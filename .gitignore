@@ -40,4 +40,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/lib/generated/prisma
+
+# docker
+data/
+docker-compose.fmp
+minio-data/
+minio-data.org/
+minio-data.tmp/
+tmp/
+
+# notes
+todo.md
+difficulty.md

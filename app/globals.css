@@ -1,711 +1,104 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
-    /* Colores principales de la marca */
-    --vl-black: #000000;
-    --vl-white: #ffffff;
-    --vl-gray: #f0f1f3;
-    --vl-blue: #1e4fff;
-
-    /* Variables del sistema */
-    --background: var(--vl-white);
-    --foreground: var(--vl-black);
-
-    /* Proporciones de color según la guía */
-    --vl-black-proportion: 40%;
-    --vl-white-proportion: 40%;
-    --vl-blue-proportion: 20%;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-@theme {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --color-vl-black: var(--vl-black);
-    --color-vl-white: var(--vl-white);
-    --color-vl-gray: var(--vl-gray);
-    --color-vl-blue: var(--vl-blue);
-    --font-sans: var(--font-marsden);
-    --font-inter: var(--font-inter);
-    --font-marsden: var(--font-marsden);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-marsden), ui-sans-serif, system-ui, -apple-system, sans-serif;
-}
-
-/* ===== VILADOMAT DESIGN SYSTEM ===== */
-
-/* === FUENTE MARSDEN - UTILIDADES === */
-.font-marsden-hairline {
-    font-weight: 100;
-}
-.font-marsden-thin {
-    font-weight: 200;
-}
-.font-marsden-extralight {
-    font-weight: 250;
-}
-.font-marsden-light {
-    font-weight: 300;
-}
-.font-marsden-regular {
-    font-weight: 400;
-}
-.font-marsden-medium {
-    font-weight: 500;
-}
-.font-marsden-semibold {
-    font-weight: 600;
-}
-.font-marsden-bold {
-    font-weight: 700;
-}
-.font-marsden-medium {
-    font-weight: 800;
-}
-.font-marsden-black {
-    font-weight: 900;
-}
-.font-marsden-super {
-    font-weight: 925;
-}
-.font-marsden-ultra {
-    font-weight: 950;
-}
-
-/* === GRADIENTES DE MARCA === */
-.vl-gradient-primary {
-    background: linear-gradient(to bottom, var(--vl-blue), var(--vl-black));
-}
-
-.vl-gradient-secondary {
-    background: linear-gradient(to right, var(--vl-blue), var(--vl-black));
-}
-
-.vl-gradient-light {
-    background: linear-gradient(to right, var(--vl-white), var(--vl-gray));
-}
-
-.vl-gradient-glass {
-    background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0.95),
-        rgba(240, 241, 243, 0.9)
-    );
-}
-
-.vl-gradient-dark {
-    background: linear-gradient(to bottom right, var(--vl-black), var(--vl-blue));
-}
-
-/* === GLASSMORPHISM EFFECTS === */
-.vl-glass {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(240, 241, 243, 0.2);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-.vl-glass-dark {
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(30, 79, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.vl-glass-blue {
-    background: rgba(30, 79, 255, 0.1);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(30, 79, 255, 0.2);
-    box-shadow: 0 20px 25px -5px rgba(30, 79, 255, 0.1);
-}
-
-.vl-glass-card {
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(240, 241, 243, 0.3);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-}
-
-.vl-glass-card:hover {
-    box-shadow: 0 35px 60px -12px rgba(30, 79, 255, 0.15);
-    transform: scale(1.02);
-}
-
-/* === BOTONES === */
-.vl-btn-primary {
-    background: var(--vl-black);
-    @apply text-vl-white font-bold px-6 py-3 hover:bg-vl-blue shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-0 outline-none focus:ring-2 focus:ring-vl-blue/50;
-}
-
-.vl-btn-secondary {
-    background: var(--vl-white);
-    @apply text-vl-black font-bold px-6 py-3 border-2 border-vl-black/20 shadow-md hover:bg-vl-gray hover:border-vl-blue transition-all duration-300 hover:scale-[1.02] focus:ring-2 focus:ring-vl-blue/50;
-}
-
-.vl-btn-dark {
-    background: var(--vl-black);
-    @apply text-vl-white  px-6 py-3  shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border-0 outline-none focus:ring-2 focus:ring-vl-black;
-}
-
-.vl-btn-outline {
-    background: transparent;
-    @apply text-vl-black  px-6 py-3  bg-white border border-gray-300   hover:bg-vl-black hover:text-vl-white transition-all duration-300 focus:ring-2 focus:ring-vl-black;
-}
-
-.vl-btn-ghost {
-    @apply bg-transparent text-vl-black font-medium px-4 py-2  hover:bg-vl-gray transition-all duration-300 border border-transparent hover:border-gray-200;
-}
-
-/* === INPUTS Y FORMS === */
-.vl-input {
-    background: var(--vl-white);
-    @apply bg-white border-2 border-vl-black/20 px-4 py-3 text-vl-black placeholder-vl-black/50 focus:border-vl-blue focus:ring-2 focus:ring-vl-blue/20 transition-all duration-300 outline-none;
-}
-
-.vl-input:focus {
-    box-shadow: 0 0 0 3px rgba(30, 79, 255, 0.15);
-}
-
-.vl-input-search {
-    background: var(--vl-white);
-    @apply bg-white border border-gray-300   px-4 py-3 text-vl-black placeholder-gray-500 hover:border-vl-blue transition-all duration-300 outline-none cursor-pointer;
-}
-
-.vl-input-search:hover {
-    transform: scale(1.01);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.vl-input-dark {
-    background: var(--vl-black);
-    @apply border border-vl-white  px-4 py-3 text-vl-white placeholder-gray-400 focus:border-vl-blue focus:ring-1 focus:ring-vl-blue transition-all duration-300 outline-none;
-}
-
-/* === NAVEGACIÓN === */
-.vl-nav-link {
-    @apply text-vl-black font-medium px-3 py-2 transition-all duration-300 relative;
-}
-
-.vl-nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--vl-black);
-    transition: width 0.3s ease;
-}
-
-.vl-nav-link:hover::after {
-    width: 100%;
-}
-
-.vl-nav-active {
-    background: var(--vl-black);
-    @apply text-vl-white px-3 py-2 font-medium transition-all duration-300;
-}
-
-.vl-nav-active:hover {
-    background: var(--vl-blue);
-}
-
-.vl-nav-dark {
-    @apply text-vl-white font-medium px-3 py-2 transition-all duration-300 relative;
-}
-
-.vl-nav-dark::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--vl-white);
-    transition: width 0.3s ease;
-}
-
-/* === ICONOS Y BADGES === */
-.vl-icon-hover {
-    @apply transition-all duration-300 hover:scale-110 hover:text-vl-blue cursor-pointer;
-}
-
-.vl-badge {
-    background: var(--vl-black);
-    @apply text-vl-white text-xs font-medium px-2 py-1;
-}
-
-.vl-badge-blue {
-    background: var(--vl-blue);
-    @apply text-vl-white text-xs font-medium px-2 py-1;
-}
-
-.vl-badge-outline {
-    background: transparent;
-    @apply text-vl-black text-xs font-medium px-2 py-1 bg-white border border-gray-300;
-}
-
-.vl-badge-counter {
-    background: var(--vl-blue);
-    @apply text-vl-white text-xs font-medium w-5 h-5 flex items-center justify-center;
-}
-
-/* === MENÚS Y DROPDOWNS === */
-.vl-menu {
-    background: var(--vl-white);
-    border: 1px solid var(--vl-black);
-    box-shadow: 4px 4px 0 var(--vl-black);
-    @apply rounded-none py-2 min-w-64;
-    animation: vl-slide-up 0.3s ease-out;
-}
-
-.vl-menu-item {
-    @apply flex items-center gap-3 px-4 py-3 text-vl-black hover:bg-vl-gray transition-all duration-200 cursor-pointer;
-}
-
-.vl-menu-separator {
-    @apply border-t border-vl-black my-2;
-}
-
-.vl-mega-menu {
-    background: var(--vl-white);
-    border: 1px solid var(--vl-black);
-    box-shadow: 8px 8px 0 var(--vl-black);
-    @apply rounded-none p-8;
-    animation: vl-slide-up 0.3s ease-out;
-}
-
-.vl-menu-dark {
-    background: var(--vl-black);
-    border: 1px solid var(--vl-white);
-    box-shadow: 4px 4px 0 var(--vl-blue);
-    @apply rounded-none py-2 min-w-64;
-    animation: vl-slide-up 0.3s ease-out;
-}
-
-.vl-menu-item-dark {
-    @apply flex items-center gap-3 px-4 py-3 text-vl-white hover:bg-vl-blue transition-all duration-200 cursor-pointer;
-}
-
-/* === HEADER ESPECÍFICO === */
-.vl-header-sticky {
-    @apply fixed top-0 left-0 right-0 z-40 transition-all duration-500;
-}
-
-.vl-header-scrolled {
-    background: var(--vl-white);
-    border-bottom: 1px solid var(--vl-black);
-}
-
-.vl-header-normal {
-    @apply bg-vl-white border-b border-vl-black;
-}
-
-.vl-header-gradient {
-    background: linear-gradient(to right, var(--vl-blue), var(--vl-black));
-    @apply text-vl-white;
-}
-
-.vl-header-dark {
-    background: var(--vl-black);
-    border-bottom: 1px solid var(--vl-white);
-}
-
-.vl-badge-premium {
-    background: var(--vl-blue);
-    @apply text-vl-white text-xs font-medium px-2 py-1  border border-vl-white;
-}
-
-.vl-promo-bar {
-    @apply text-vl-white py-2 px-4 text-center relative overflow-hidden font-medium;
-}
-
-.vl-promo-bar-dark {
-    background: var(--vl-black);
-    @apply text-vl-white py-2 px-4 text-center relative overflow-hidden font-medium border-b border-vl-white;
-}
-
-.vl-promo-bar-blue {
-    background: var(--vl-blue);
-    @apply text-vl-white py-2 px-4 text-center relative overflow-hidden font-medium border-b border-vl-white;
-}
-
-.vl-footer-dark {
-    background: var(--vl-black);
-    @apply text-vl-white py-2 px-4 text-center relative overflow-hidden font-medium border-b border-vl-white;
-}
-
-/* === ANIMACIONES === */
-@keyframes vl-slide-up {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes vl-fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes vl-scale-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes vl-slide-in {
-    0% {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.vl-animate-slide-up {
-    animation: vl-slide-up 0.3s ease-out forwards;
-}
-
-.vl-animate-fade-in {
-    animation: vl-fade-in 0.2s ease-out forwards;
-}
-
-.vl-animate-scale-in {
-    animation: vl-scale-in 0.3s ease-out forwards;
-}
-
-.vl-animate-slide-in {
-    animation: vl-slide-in 0.3s ease-out forwards;
-}
-
-/* === EFECTOS HOVER === */
-.vl-hover-lift {
-    @apply transition-all duration-200;
-}
-
-.vl-hover-lift:hover {
-    transform: translateY(-2px);
-}
-
-.vl-hover-scale {
-    @apply transition-all duration-200 hover:scale-[1.02];
-}
-
-.vl-hover-shadow {
-    @apply transition-all duration-200;
-}
-
-.vl-hover-shadow:hover {
-    box-shadow: 4px 4px 0 var(--vl-black);
-}
-
-.vl-hover-shadow-blue {
-    @apply transition-all duration-200;
-}
-
-.vl-hover-shadow-blue:hover {
-    box-shadow: 4px 4px 0 var(--vl-blue);
-}
-
-.vl-shadow-subtle {
-    box-shadow: 2px 2px 0 var(--vl-gray);
-}
-
-/* === CONTENEDORES === */
-.vl-container {
-    @apply max-w-7xl mx-auto px-4 lg:px-8;
-}
-
-.vl-section {
-    @apply py-12 lg:py-20;
-}
-
-/* === UTILIDADES RESPONSIVE === */
-.vl-hide-mobile {
-    @apply hidden md:block;
-}
-
-.vl-hide-desktop {
-    @apply block md:hidden;
-}
-
-/* === SCROLLBAR UTILITIES === */
-.scrollbar-hide {
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox */
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
-
-.vl-mobile-menu {
-    background: var(--vl-white);
-    border-top: 1px solid var(--vl-black);
-    animation: vl-slide-up 0.3s ease-out;
-}
-
-/* === ESTADOS DE CARGA === */
-.vl-skeleton {
-    background: var(--vl-gray);
-    @apply animate-pulse;
-}
-
-.vl-loading {
-    @apply relative overflow-hidden;
-}
-
-.vl-loading::after {
-    content: '';
-    background: var(--vl-gray);
-    @apply absolute inset-0 animate-pulse;
-}
-
-/* === EFECTOS DE TEXTO === */
-.vl-text-outline {
-    -webkit-text-stroke: 1px var(--vl-black);
-    color: transparent;
-}
-
-.vl-text-outline-white {
-    -webkit-text-stroke: 1px var(--vl-white);
-    color: transparent;
-}
-
-/* === TARJETAS === */
-.vl-card {
-    background: var(--vl-white);
-    border: 1px solid var(--vl-black);
-    @apply p-6 transition-all duration-200;
-}
-
-.vl-card-hover {
-    background: var(--vl-white);
-    border: 1px solid var(--color-gray-300);
-    @apply p-6 transition-all duration-200;
-}
-
-.vl-card-hover:hover {
-    border: 1px solid var(--vl-blue);
-    transform: translate(-2px, -2px);
-}
-
-.vl-card-dark {
-    background: var(--vl-black);
-    border: 1px solid var(--vl-white);
-    @apply p-6 text-white transition-all duration-200;
-}
-
-/* === UTILIDADES === */
-.vl-divider {
-    @apply border-t border-vl-black;
-}
-
-.vl-divider-white {
-    @apply border-t border-vl-white;
-}
-
-.vl-backdrop {
-    background: rgba(0, 0, 0, 0.8);
-    @apply fixed inset-0 transition-all duration-200;
-}
-
-.vl-focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-vl-black;
-}
-
-.vl-focus-ring-white {
-    @apply focus:outline-none focus:ring-2 focus:ring-vl-white;
-}
-
-/* ===== ANIMACIONES DEL MEGAMENÚ ===== */
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes slideInFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Animaciones para elementos del megamenú */
-.mega-menu-item {
-    animation: slideInUp 0.6s ease-out forwards;
-}
-
-.mega-menu-item:nth-child(1) {
-    animation-delay: 0ms;
-}
-.mega-menu-item:nth-child(2) {
-    animation-delay: 50ms;
-}
-.mega-menu-item:nth-child(3) {
-    animation-delay: 100ms;
-}
-.mega-menu-item:nth-child(4) {
-    animation-delay: 150ms;
-}
-.mega-menu-item:nth-child(5) {
-    animation-delay: 200ms;
-}
-.mega-menu-item:nth-child(6) {
-    animation-delay: 250ms;
-}
-.mega-menu-item:nth-child(7) {
-    animation-delay: 300ms;
-}
-.mega-menu-item:nth-child(8) {
-    animation-delay: 350ms;
-}
-
-/* Efectos hover mejorados para tarjetas */
-.category-card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.category-card-hover:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Transiciones suaves para iconos */
-.icon-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.icon-transition:hover {
-    transform: scale(1.1) rotate(5deg);
-}
-
-/* Efecto de aparición progresiva para el megamenú */
-.mega-menu-enter {
-    animation: scaleIn 0.4s ease-out forwards;
-}
-
-.mega-menu-enter-active {
-    animation: slideInUp 0.6s ease-out forwards;
-}
-
-/* Efectos de glassmorphism mejorados */
-.mega-menu-glass {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-/* Efectos de hover para botones del megamenú */
-.mega-menu-btn {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.mega-menu-btn:hover {
-    background: rgba(0, 100, 189, 0.1);
-    transform: translateY(-1px);
-}
-
-/* Animación de carga para estadísticas */
-@keyframes countUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.stats-animation {
-    animation: countUp 0.5s ease-out forwards;
-}
-
-/* Efectos de partículas para elementos destacados */
-@keyframes sparkle {
-    0%,
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.sparkle-effect {
-    animation: sparkle 2s ease-in-out infinite;
-}
-
-/* Transiciones para el cierre del megamenú */
-.mega-menu-exit {
-    animation: scaleIn 0.3s ease-in reverse;
-}
-
-/* Efectos de profundidad para tarjetas */
-.depth-card {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.depth-card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05),
-        0 0 0 1px rgba(0, 100, 189, 0.1);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Estilos para inputs, selects y textareas en modo oscuro */
+input,
+select,
+textarea {
+  color: #171717;
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  input,
+  select,
+  textarea {
+    color: #171717;
+    background-color: #ffffff;
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: #6b7280;
+  }
+  
+  /* Selects con opciones */
+  select option {
+    color: #171717;
+    background-color: #ffffff;
+  }
+}
+
+/* Asegurar que los inputs deshabilitados se vean correctamente */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* React-Select en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .react-select__control {
+    background-color: #ffffff !important;
+    border-color: #d1d5db !important;
+  }
+  
+  .react-select__single-value,
+  .react-select__multi-value__label,
+  .react-select__input-container,
+  .react-select__placeholder {
+    color: #171717 !important;
+  }
+  
+  .react-select__menu {
+    background-color: #ffffff !important;
+  }
+  
+  .react-select__option {
+    color: #171717 !important;
+    background-color: #ffffff !important;
+  }
+  
+  .react-select__option--is-focused {
+    background-color: #e0e7ff !important;
+  }
+  
+  .react-select__option--is-selected {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+  }
+  
+  .react-select__multi-value {
+    background-color: #e0e7ff !important;
+  }
 }
