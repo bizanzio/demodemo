@@ -1,0 +1,50 @@
+container:
+  image: node:20-alpine
+  workdir: /app
+
+  # openssl: el motor de consultas de Prisma lo necesita en Alpine (si no,
+  # falla en runtime con "Unable to require libquery_engine..."). libc6-compat:
+  # recomendación estándar de Next.js para Alpine (binarios nativos de SWC/
+  # sharp), ver el ejemplo oficial "with-docker" de Next.js.
+  uses: [openssl, libc6-compat]
+
+  startup:
+    - type: prisma-db-sync
+      schema: prisma/schema.prisma
+      migrations_dir: prisma/migrations
+
+  apps:
+    - name: web
+      build:
+        - copy: [package.json, package-lock.json]
+        # --include=dev: la app necesita devDependencies en el build (p.ej.
+        # "@tailwindcss/postcss", "typescript", "prisma" CLI) — si la nota de
+        # 1Password trae NODE_ENV=production entre las variables que llegan
+        # como --build-arg ANTES de este paso, "npm ci" a secas las omitiría.
+        - run: npm ci --include=dev
+        - copy: ["."]
+        - run:
+            - npx prisma generate --schema=prisma/schema.prisma
+            # NODE_ENV=production explícito: si la nota de 1Password trae
+            # NODE_ENV=development entre esas mismas variables ya presentes
+            # antes de este paso, "next build" prerenderiza en modo dev y
+            # rompe el prerender de /404 (entre otros efectos de modo dev).
+            - NODE_ENV=production npm run build
+      run:
+        # Ruta ABSOLUTA a propósito (mismo motivo que el ejemplo "taller" en
+        # BUILDER_YML.md): evita cualquier ambigüedad de resolución de pm2.
+        script: /app/node_modules/next/dist/bin/next
+        args: start
+        interpreter: node
+        env:
+          NODE_ENV: production
+          PORT: "3000"
+          HOSTNAME: "0.0.0.0"
+      expose:
+        port: 3000
+        path_prefix: /
+        priority: 1
+        # "/" es la home pública (sin datos de BD, sin autenticación: el
+        # middleware de la app solo protege /admin y /api) — único candidato
+        # estable para healthcheck sin tocar código de la app.
+        healthcheck: /
