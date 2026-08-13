@@ -22,6 +22,35 @@ container:
         - copy: [package.json, package-lock.json]
         - run: npm ci
         - copy: ["."]
+        # El repo NO trae app/not-found.tsx. Sin él, "next build" en limpio
+        # (sin caché de .next, que es justo lo que pasa en un build Docker
+        # desde cero) revienta al pre-renderizar "/404" con
+        # "<Html> should not be imported outside of pages/_document": es el
+        # gap que next-intl documenta para peticiones que no matchean
+        # [locale] (no hay layout raíz que aporte <html>/<body> para ese
+        # caso). Contenido en base64 (ver detalle debajo) para no arrastrar
+        # comillas/JSX a través del YAML -> shell -> Dockerfile RUN.
+        # Fuente legible del fichero que decodifica esta línea:
+        #
+        #   import './globals.css';
+        #   export default function NotFound() {
+        #     return (
+        #       <html lang="ca">
+        #         <body className="h-full bg-white text-gray-900 antialiased">
+        #           <div className="min-h-screen flex items-center justify-center p-4">
+        #             <div className="text-center">
+        #               <h1 className="text-2xl font-semibold mb-2">404</h1>
+        #               <p className="text-gray-500">Page not found</p>
+        #             </div>
+        #           </div>
+        #         </body>
+        #       </html>
+        #     );
+        #   }
+        - run: >-
+            echo
+            aW1wb3J0ICcuL2dsb2JhbHMuY3NzJzsKCi8vIEZhbGxiYWNrIHBhcmEgcGV0aWNpb25lcyBxdWUgbmkgc2lxdWllcmEgbGxlZ2FuIGEgbWF0Y2hlYXIgZWwgc2VnbWVudG8KLy8gW2xvY2FsZV0gKHAuZWouIHVuIGVubGFjZSBleHRlcm5vIHJvdG8pLiBObyB0aWVuZSBhY2Nlc28gYWwgcHJvdmlkZXIgZGUKLy8gbmV4dC1pbnRsIChubyBoYXkgbG9jYWxlIHJlc3VlbHRvIHRvZGF2w61hKSBuaSBhIHVuIGxheW91dCByYcOteiBxdWUgeWEKLy8gYXBvcnRlIDxodG1sPi88Ym9keT4g4oCUIHNpbiBlc3RlIGZpY2hlcm8sICJuZXh0IGJ1aWxkIiBjYWUgYWwgcmVuZGVyZXIKLy8gbGVnYWN5IGRlIHBhZ2VzL19kb2N1bWVudCBhbCBwcmUtcmVuZGVyaXphciAiLzQwNCIgeSBmYWxsYSBjb24KLy8gIjxIdG1sPiBzaG91bGQgbm90IGJlIGltcG9ydGVkIG91dHNpZGUgb2YgcGFnZXMvX2RvY3VtZW50Ii4KLy8gVmVyOiBodHRwczovL25leHQtaW50bC5kZXYvZG9jcy9lbnZpcm9ubWVudHMvZXJyb3ItZmlsZXMjY2F0Y2hpbmctbm9uLWxvY2FsaXplZC1yZXF1ZXN0cwpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBOb3RGb3VuZCgpIHsKICAgIHJldHVybiAoCiAgICAgICAgPGh0bWwgbGFuZz0iY2EiPgogICAgICAgICAgICA8Ym9keSBjbGFzc05hbWU9ImgtZnVsbCBiZy13aGl0ZSB0ZXh0LWdyYXktOTAwIGFudGlhbGlhc2VkIj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtaW4taC1zY3JlZW4gZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgcC00Ij4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC1jZW50ZXIiPgogICAgICAgICAgICAgICAgICAgICAgICA8aDEgY2xhc3NOYW1lPSJ0ZXh0LTJ4bCBmb250LXNlbWlib2xkIG1iLTIiPjQwNDwvaDE+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1ncmF5LTUwMCI+UGFnZSBub3QgZm91bmQ8L3A+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9ib2R5PgogICAgICAgIDwvaHRtbD4KICAgICk7Cn0K
+            | base64 -d > app/not-found.tsx
         # Genera @prisma/client contra el schema (no toca la BD: eso lo hace
         # "startup" en runtime, contra la BD real de cada entorno).
         - run: npx prisma generate
