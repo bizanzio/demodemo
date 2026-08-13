@@ -1,0 +1,82 @@
+// Schema optimizado para encuestas post-compra
+// Solo las tablas esenciales para funcionalidad básica + idempotencia
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum para rangos de tiempo de espera
+enum WaitTimeRange {
+  less2  @map("less2")
+  to5    @map("2to5")
+  to10   @map("5to10")
+  more10 @map("more10")
+
+  @@map("wait_time_range")
+}
+
+// Tabla principal: respuestas de encuestas
+model Survey {
+  id       String @id @default(cuid())
+  ticketId String @unique @map("ticket_id") @db.VarChar(100)
+  
+  // Respuestas de la encuesta - nomenclatura consistente en camelCase
+  csatScore          Int           @map("csat_score") @db.TinyInt // 1-5
+  npsScore           Int           @map("nps_score") @db.TinyInt // 0-10  
+  salespersonRating  Int           @map("salesperson_rating") @db.TinyInt // 1-5
+  foundEverything    Boolean       @map("found_everything")
+  waitTimeRange      WaitTimeRange @map("wait_time_range")
+  comment            String?       @db.Text
+  
+  // Metadatos
+  locale      String?  @db.VarChar(5)
+  submittedAt DateTime @default(now()) @map("submitted_at")
+  
+  // Campos antifraude (opcionales)
+  ipHash     String? @map("ip_hash") @db.VarChar(64) // SHA-256 de IP
+  userAgent  String? @map("user_agent") @db.VarChar(500)
+  
+  // Relación inversa
+  submission SurveySubmission?
+  
+  @@map("surveys")
+  @@index([ticketId])
+  @@index([submittedAt])
+  @@index([locale, submittedAt])
+  @@index([ipHash]) // Para detectar múltiples encuestas de la misma IP
+}
+
+// Tabla para idempotencia: evitar envíos duplicados
+model SurveySubmission {
+  id        String   @id @default(cuid())
+  ticketId  String   @unique @map("ticket_id") @db.VarChar(100)
+  surveyId  String?  @unique @map("survey_id") // Referencia a la encuesta creada
+  status    String   @default("completed") @db.VarChar(20) // 'completed'|'failed'
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Información del premio (Vales de descuento)
+  rewardStatus    String?   @map("reward_status") @db.VarChar(30) // 'PROCESSED'|'NOT_ELIGIBLE'|'ERROR'|etc
+  voucherId       String?   @map("voucher_id") @db.VarChar(100)
+  voucherAmount   Decimal?  @map("voucher_amount") @db.Decimal(10, 2)
+  rewardProcessedAt DateTime? @map("reward_processed_at") // Cuándo se procesó
+  
+  // Retrocompatibilidad o campos adicionales
+  pointsStatus    String? @map("points_status") @db.VarChar(30) // Mantener por si acaso o migrar
+  pointsEarned    Decimal? @map("points_earned") @db.Decimal(10, 2)
+  pointsTotal     Decimal? @map("points_total") @db.Decimal(10, 2)
+  pointsProcessedAt DateTime? @map("points_processed_at")
+  
+  // Relación con Survey
+  survey Survey? @relation(fields: [surveyId], references: [id], onDelete: SetNull)
+  
+  @@map("survey_submissions")
+  @@index([ticketId])
+  @@index([status])
+  @@index([surveyId])
+  @@index([pointsStatus]) // Para análisis de puntos
+}

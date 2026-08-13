@@ -1,0 +1,111 @@
+{
+    "survey": {
+        "title": "Valora tu experiencia",
+        "subtitle": "Ayúdanos a mejorar con tu opinión",
+        "progress": "{current} de {total}",
+        "next": "Siguiente",
+        "previous": "Anterior",
+        "submit": "Enviar valoración",
+        "submitting": "Enviando...",
+        "thankYou": "¡Gracias por tu opinión!",
+        "voucherEarned": "¡Vale de descuento generado!",
+        "voucherAlreadyProcessed": "Vale ya generado anteriormente",
+        "voucherNotEligible": "Esta compra no genera vale",
+        "voucherExpired": "Oferta de vale expirada",
+        "voucherNotAvailable": "Ticket no válido para vale",
+        "voucherError": "Error técnico con el vale",
+        "voucherCode": "Código del vale",
+        "discount": "de descuento",
+        "voucherInstructions": "Presenta este código en tu próxima compra.",
+        "voucherNotEligibleMessage": "Esta compra no cumple los requisitos para generar un vale de descuento.",
+        "voucherExpiredMessage": "La oferta del vale ha expirado.",
+        "voucherNotAvailableMessage": "Este ticket no es válido o ha sido cancelado/devuelto.",
+        "voucherErrorMessage": "No hemos podido generar tu vale. Por favor, contacta con atención al cliente.",
+        "voucherAlreadyProcessedMessage": "El vale para esta compra ya se ha generado anteriormente.",
+        "alreadySubmitted": "Ya has respondido esta encuesta. ¡Gracias de nuevo por ayudarnos a mejorar!",
+        "timeout": "La sesión ha expirado por inactividad. Por favor, accede de nuevo desde el enlace original.",
+        "error": "Ha habido un error. Por favor, inténtalo de nuevo más tarde."
+    },
+    "questions": {
+        "csat": {
+            "title": "¿Cómo ha sido tu experiencia hoy?",
+            "scale": "1 = Muy mala · 5 = Excelente"
+        },
+        "nps": {
+            "title": "¿Recomendarías Viladomat a un amigo?",
+            "scale": "0 = Nada probable · 10 = Extremadamente probable"
+        },
+        "salesperson": {
+            "title": "¿Cómo valoras la atención recibida?",
+            "scale": "1 = Muy mala · 5 = Excelente"
+        },
+        "foundEverything": {
+            "title": "¿Has encontrado todo lo que buscabas?",
+            "yes": "Sí",
+            "no": "No"
+        },
+        "waitTime": {
+            "title": "¿Cuánto tiempo has esperado?",
+            "options": {
+                "less2": "Menos de 2 min",
+                "2to5": "2-5 min",
+                "5to10": "5-10 min",
+                "more10": "Más de 10 min"
+            }
+        },
+        "comment": {
+            "title": "¿Qué podríamos mejorar?",
+            "placeholder": "Escribe tus comentarios aquí (opcional)",
+            "maxLength": "Máximo 250 caracteres"
+        }
+    },
+    "validation": {
+        "required": "Este campo es obligatorio",
+        "invalidToken": "Token inválido o expirado",
+        "maxLength": "Máximo {max} caracteres",
+        "networkError": "Error de conexión. Por favor, inténtalo de nuevo."
+    },
+    "progress": {
+        "question": "Pregunta {current} de {total}",
+        "completed": "{percentage}% completado"
+    },
+    "alreadySubmitted": {
+        "title": "¡Gracias!",
+        "message": "Ya has respondido esta encuesta. ¡Gracias de nuevo por ayudarnos a mejorar!",
+        "importantOpinion": "Tu opinión es importante",
+        "continueWorking": "Continuaremos trabajando para ofrecerte la mejor experiencia posible en tus próximas visitas."
+    },
+    "errorPage": {
+        "missingToken": {
+            "title": "Código necesario",
+            "message": "No hemos encontrado ningún código válido. Por favor, vuelve a escanear el código QR de tu tique."
+        },
+        "invalidToken": {
+            "title": "Código no válido o caducado",
+            "message": "Este código QR no es válido o ha caducado. Por favor, vuelve a escanear el código de tu tique. Si el problema continúa, contacta con la tienda."
+        },
+        "rateLimited": {
+            "title": "Demasiados intentos seguidos",
+            "message": "Hemos recibido demasiadas peticiones seguidas desde este dispositivo o red. Espera unos minutos y vuelve a escanear el código QR del tique. Si tienes varios tiques, haz las encuestas de uno en uno."
+        },
+        "timeout": {
+            "title": "Sesión expirada",
+            "message": "La sesión ha expirado por inactividad. Por favor, accede de nuevo desde el enlace original."
+        },
+        "general": {
+            "title": "Error",
+            "message": "Ha habido un error. Por favor, inténtalo de nuevo más tarde."
+        },
+        "needHelp": "¿Necesitas ayuda?",
+        "contactSupport": "Si continúas teniendo problemas, puedes contactar con nuestro equipo de soporte."
+    },
+    "loading": {
+        "default": "Cargando...",
+        "submitting": "Enviando..."
+    },
+    "success": {
+        "thankYouMessage": "Tu valoración nos ayuda a mejorar constantemente la experiencia de todos nuestros clientes.",
+        "seeYouSoon": "Esperamos verte pronto",
+        "qualityMessage": "Trabajamos cada día para ofrecerte productos de calidad y un servicio excelente. Tu confianza es nuestro mejor premio."
+    }
+}

@@ -1,0 +1,48 @@
+container:
+  image: node:22-alpine
+  workdir: /app
+
+  # openssl: lo necesita el query engine de Prisma en Alpine (sin él falla en
+  # runtime con "Unable to require libquery_engine..."). libc6-compat: mismo
+  # motivo que en el resto de proyectos (compatibilidad de paquetes nativos
+  # con la libc de Alpine), no se ha necesitado descartarlo.
+  uses: [openssl, libc6-compat]
+
+  # No hay "prepare": es una única app en la raíz del repo, sin monorepo que
+  # comparta nada — todo el build vive en apps[0].build.
+
+  startup:
+    - type: prisma-db-sync
+      schema: prisma/schema.prisma
+      migrations_dir: prisma/migrations
+
+  apps:
+    - name: web
+      build:
+        - copy: [package.json, package-lock.json]
+        - run: npm ci
+        - copy: ["."]
+        # Genera @prisma/client contra el schema (no toca la BD: eso lo hace
+        # "startup" en runtime, contra la BD real de cada entorno).
+        - run: npx prisma generate
+        - run: npm run build
+      run:
+        # Ruta relativa a "cwd" (= workdir, /app): npm ci instala en el
+        # node_modules de la raíz sin hoisting de monorepo, así que
+        # "node_modules/next/dist/bin/next" ya apunta al binario correcto.
+        script: node_modules/next/dist/bin/next
+        args: start
+        interpreter: node
+        env:
+          NODE_ENV: production
+          PORT: "3000"
+          HOSTNAME: "0.0.0.0"
+      expose:
+        port: 3000
+        path_prefix: /
+        priority: 1
+        # "/" pasa por el middleware de next-intl (redirige a /<locale>) y
+        # luego la home redirige a /<locale>/survey — varias redirecciones
+        # en cadena, pero el wget del HEALTHCHECK las sigue por defecto
+        # hasta el 200 final.
+        healthcheck: /

@@ -1,0 +1,110 @@
+{
+    "survey": {
+        "title": "Rate your experience",
+        "subtitle": "Help us improve with your feedback",
+        "progress": "{current} of {total}",
+        "next": "Next",
+        "previous": "Previous",
+        "submit": "Submit rating",
+        "thankYou": "Thank you for your feedback!",
+        "voucherEarned": "Discount voucher generated!",
+        "voucherAlreadyProcessed": "Voucher already generated previously",
+        "voucherNotEligible": "This purchase doesn't earn a voucher",
+        "voucherExpired": "Voucher offer expired",
+        "voucherNotAvailable": "Ticket not valid for voucher",
+        "voucherError": "Technical error with voucher",
+        "voucherCode": "Voucher code",
+        "discount": "discount",
+        "voucherInstructions": "Present this code on your next purchase.",
+        "voucherNotEligibleMessage": "This purchase doesn't meet the requirements to generate a discount voucher.",
+        "voucherExpiredMessage": "The voucher offer has expired.",
+        "voucherNotAvailableMessage": "This ticket is not valid or has been cancelled/returned.",
+        "voucherErrorMessage": "We couldn't generate your voucher. Please contact customer support.",
+        "voucherAlreadyProcessedMessage": "Voucher for this purchase has already been generated.",
+        "alreadySubmitted": "You have already answered this survey. Thank you again for helping us improve!",
+        "timeout": "The session has expired due to inactivity. Please access again from the original link.",
+        "error": "There was an error. Please try again later."
+    },
+    "questions": {
+        "csat": {
+            "title": "How was your experience today?",
+            "scale": "1 = Very poor · 5 = Excellent"
+        },
+        "nps": {
+            "title": "Would you recommend Viladomat to a friend?",
+            "scale": "0 = Not at all likely · 10 = Extremely likely"
+        },
+        "salesperson": {
+            "title": "How do you rate the service received?",
+            "scale": "1 = Very poor · 5 = Excellent"
+        },
+        "foundEverything": {
+            "title": "Did you find everything you were looking for?",
+            "yes": "Yes",
+            "no": "No"
+        },
+        "waitTime": {
+            "title": "How long did you wait?",
+            "options": {
+                "less2": "Less than 2 min",
+                "2to5": "2-5 min",
+                "5to10": "5-10 min",
+                "more10": "More than 10 min"
+            }
+        },
+        "comment": {
+            "title": "What could we improve?",
+            "placeholder": "Write your comments here (optional)",
+            "maxLength": "Maximum 250 characters"
+        }
+    },
+    "validation": {
+        "required": "This field is required",
+        "invalidToken": "Invalid or expired token",
+        "maxLength": "Maximum {max} characters",
+        "networkError": "Connection error. Please try again."
+    },
+    "progress": {
+        "question": "Question {current} of {total}",
+        "completed": "{percentage}% completed"
+    },
+    "alreadySubmitted": {
+        "title": "Thank you!",
+        "message": "You have already answered this survey. Thank you again for helping us improve!",
+        "importantOpinion": "Your opinion matters",
+        "continueWorking": "We will continue working to offer you the best possible experience on your next visits."
+    },
+    "errorPage": {
+        "missingToken": {
+            "title": "Code required",
+            "message": "No valid code found. Please scan the QR code on your receipt again."
+        },
+        "invalidToken": {
+            "title": "Invalid or expired code",
+            "message": "This QR code is not valid or has expired. Please scan the code on your receipt again. If the problem persists, contact the store."
+        },
+        "rateLimited": {
+            "title": "Too many attempts",
+            "message": "We've received too many requests from this device or network. Please wait a few minutes and scan the QR code on your receipt again. If you have several receipts, complete the surveys one at a time."
+        },
+        "timeout": {
+            "title": "Session expired",
+            "message": "The session has expired due to inactivity. Please access again from the original link."
+        },
+        "general": {
+            "title": "Error",
+            "message": "There was an error. Please try again later."
+        },
+        "needHelp": "Need help?",
+        "contactSupport": "If you continue having problems, please contact our support team."
+    },
+    "loading": {
+        "default": "Loading...",
+        "submitting": "Submitting..."
+    },
+    "success": {
+        "thankYouMessage": "Your feedback helps us constantly improve the experience for all our customers.",
+        "seeYouSoon": "We hope to see you soon",
+        "qualityMessage": "We work every day to offer you quality products and excellent service. Your trust is our greatest reward."
+    }
+}

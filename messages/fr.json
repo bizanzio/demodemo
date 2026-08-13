@@ -1,0 +1,110 @@
+{
+    "survey": {
+        "title": "Évaluez votre expérience",
+        "subtitle": "Aidez-nous à nous améliorer avec votre avis",
+        "progress": "{current} sur {total}",
+        "next": "Suivant",
+        "previous": "Précédent",
+        "submit": "Envoyer l'évaluation",
+        "thankYou": "Merci pour votre avis !",
+        "voucherEarned": "Bon de réduction généré !",
+        "voucherAlreadyProcessed": "Bon déjà généré précédemment",
+        "voucherNotEligible": "Cet achat ne génère pas de bon",
+        "voucherExpired": "Offre de bon expirée",
+        "voucherNotAvailable": "Ticket non valide pour le bon",
+        "voucherError": "Erreur technique avec le bon",
+        "voucherCode": "Code du bon",
+        "discount": "de réduction",
+        "voucherInstructions": "Présentez ce code lors de votre prochain achat.",
+        "voucherNotEligibleMessage": "Cet achat ne remplit pas les conditions pour générer un bon de réduction.",
+        "voucherExpiredMessage": "L'offre du bon a expiré.",
+        "voucherNotAvailableMessage": "Ce ticket n'est pas valide ou a été annulé/retourné.",
+        "voucherErrorMessage": "Nous n'avons pas pu générer votre bon. Veuillez contacter le service client.",
+        "voucherAlreadyProcessedMessage": "Le bon pour cet achat a déjà été généré précédemment.",
+        "alreadySubmitted": "Vous avez déjà répondu à ce questionnaire. Merci encore de nous aider à nous améliorer !",
+        "timeout": "La session a expiré en raison d'inactivité. Veuillez accéder à nouveau depuis le lien original.",
+        "error": "Il y a eu une erreur. Veuillez réessayer plus tard."
+    },
+    "questions": {
+        "csat": {
+            "title": "Comment s'est passée votre expérience aujourd'hui ?",
+            "scale": "1 = Très mauvaise · 5 = Excellente"
+        },
+        "nps": {
+            "title": "Recommanderiez-vous Viladomat à un ami ?",
+            "scale": "0 = Pas du tout probable · 10 = Extrêmement probable"
+        },
+        "salesperson": {
+            "title": "Comment évaluez-vous le service reçu ?",
+            "scale": "1 = Très mauvaise · 5 = Excellente"
+        },
+        "foundEverything": {
+            "title": "Avez-vous trouvé tout ce que vous cherchiez ?",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "waitTime": {
+            "title": "Combien de temps avez-vous attendu ?",
+            "options": {
+                "less2": "Moins de 2 min",
+                "2to5": "2-5 min",
+                "5to10": "5-10 min",
+                "more10": "Plus de 10 min"
+            }
+        },
+        "comment": {
+            "title": "Que pourrions-nous améliorer ?",
+            "placeholder": "Écrivez vos commentaires ici (optionnel)",
+            "maxLength": "Maximum 250 caractères"
+        }
+    },
+    "validation": {
+        "required": "Ce champ est obligatoire",
+        "invalidToken": "Token invalide ou expiré",
+        "maxLength": "Maximum {max} caractères",
+        "networkError": "Erreur de connexion. Veuillez réessayer."
+    },
+    "progress": {
+        "question": "Question {current} sur {total}",
+        "completed": "{percentage}% complété"
+    },
+    "alreadySubmitted": {
+        "title": "Merci !",
+        "message": "Vous avez déjà répondu à ce questionnaire. Merci encore de nous aider à nous améliorer !",
+        "importantOpinion": "Votre avis compte",
+        "continueWorking": "Nous continuerons à travailler pour vous offrir la meilleure expérience possible lors de vos prochaines visites."
+    },
+    "errorPage": {
+        "missingToken": {
+            "title": "Code requis",
+            "message": "Aucun code valide trouvé. Veuillez scanner à nouveau le code QR de votre ticket."
+        },
+        "invalidToken": {
+            "title": "Code invalide ou expiré",
+            "message": "Ce code QR n'est pas valide ou a expiré. Veuillez scanner à nouveau le code de votre ticket. Si le problème persiste, contactez le magasin."
+        },
+        "rateLimited": {
+            "title": "Trop de tentatives",
+            "message": "Nous avons reçu trop de requêtes depuis cet appareil ou ce réseau. Veuillez patienter quelques minutes et scanner à nouveau le code QR de votre ticket. Si vous avez plusieurs tickets, complétez les questionnaires un par un."
+        },
+        "timeout": {
+            "title": "Session expirée",
+            "message": "La session a expiré en raison d'inactivité. Veuillez accéder à nouveau depuis le lien original."
+        },
+        "general": {
+            "title": "Erreur",
+            "message": "Il y a eu une erreur. Veuillez réessayer plus tard."
+        },
+        "needHelp": "Besoin d'aide ?",
+        "contactSupport": "Si vous continuez à avoir des problèmes, veuillez contacter notre équipe de support."
+    },
+    "loading": {
+        "default": "Chargement...",
+        "submitting": "Envoi en cours..."
+    },
+    "success": {
+        "thankYouMessage": "Votre avis nous aide à améliorer constamment l'expérience de tous nos clients.",
+        "seeYouSoon": "Nous espérons vous revoir bientôt",
+        "qualityMessage": "Nous travaillons chaque jour pour vous offrir des produits de qualité et un service excellent. Votre confiance est notre plus belle récompense."
+    }
+}
